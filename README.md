@@ -1,7 +1,7 @@
 # AOE4ScenarioEditor
 A simple mod to test unit vs. unit scenarios in AOE4.
 
-By default, units have full upgrades in Imperial age.
+By default, units have full upgrades in Imperial age. If you would like to disable this, after you have the file open (step 6) navigate to ScenarioTester.scar and add "--" before line 50: AGS_Technologies_UpgradeAllPlayers(). This will comment out that line, resulting in the code not being used. You can also simply delete if if you never think you'll that functionality.
 
 How to load this mod:
 Follow steps 1-6, then execute step 14-19. If you would like to edit the scenario being tested, follow the full instructions.
@@ -25,3 +25,5 @@ Follow steps 1-6, then execute step 14-19. If you would like to edit the scenari
 17. You should see "ScenarioTester" as an option.
 18. Assign an AI as an opponent. You can select whether you get Player 1 or Player 2 units by choosing your starting position of 1 or 2. If you do not, you'll be randomly assigned each time you restart the map. Note: If you do not assign a second AI player, you will receive a fatal scar error.
 19. Click Start Game.
+
+Credit to Wopack for the code to auto-upgrade techs to Imperial from the Advanced Game Settings mod.
