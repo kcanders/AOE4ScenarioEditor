@@ -1,0 +1,116 @@
+HeaderInfo =  
+{
+	mapsize =  
+	{
+		416,
+		416,
+	},
+	point_positions =  
+	{
+		 
+		{
+			ebp_name = "starting_position_no_town_center",
+			owner_id = 1001,
+			x = -34.96930,
+			y = -109.80315,
+		},
+		 
+		{
+			ebp_name = "starting_position_no_town_center",
+			owner_id = 1000,
+			x = -90.06905,
+			y = -102.33824,
+		},
+	},
+	scenario_type = 1,
+	scenarioname = "ScenarioTester",
+	slots =  
+	{
+		 
+		{
+			status = 0,
+			team = 10001,
+		},
+		 
+		{
+			status = 0,
+			team = 10001,
+		},
+		 
+		{
+			status = 1,
+			team = 10001,
+		},
+		 
+		{
+			status = 1,
+			team = 10001,
+		},
+		 
+		{
+			status = 1,
+			team = 10001,
+		},
+		 
+		{
+			status = 1,
+			team = 10001,
+		},
+		 
+		{
+			status = 1,
+			team = 10001,
+		},
+		 
+		{
+			status = 1,
+			team = 10001,
+		},
+		 
+		{
+			status = 1,
+			team = 10001,
+		},
+		 
+		{
+			status = 1,
+			team = 10001,
+		},
+		 
+		{
+			status = 1,
+			team = 10001,
+		},
+		 
+		{
+			status = 1,
+			team = 10001,
+		},
+		 
+		{
+			status = 1,
+			team = 10001,
+		},
+		 
+		{
+			status = 1,
+			team = 10001,
+		},
+		 
+		{
+			status = 1,
+			team = 10001,
+		},
+		 
+		{
+			status = 1,
+			team = 10001,
+		},
+	},
+	start_location = 1,
+	version = 3001,
+	visible_in_lobby = true,
+	win_condition = "00000000000000000000000000000000:1369895226",
+	worldbp = "default",
+}
+

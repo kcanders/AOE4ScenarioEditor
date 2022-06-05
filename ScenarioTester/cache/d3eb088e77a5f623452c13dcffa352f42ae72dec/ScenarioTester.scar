@@ -1,0 +1,107 @@
+
+
+import("MissionOMatic/MissionOMatic.scar")    
+
+-- The MissionOMatic will check to see if the functions below are defined, and if they are,
+-- it will call them at the appropriate time
+
+
+
+function Mission_SetupPlayers()
+	
+	--
+	-- get player IDs for each player
+	-- 
+	player1 = World_GetPlayerAt(1) 
+
+
+	
+	-- Setup players name, starting age and max age 
+
+--	Player_SetCurrentAge(player1, AGE_DARK)
+--	Player_SetMaximumAge(player1, AGE_FEUDAL)
+
+	
+end
+
+
+function Mission_SetupVariables()	-- create any extra sgroups, egroups, and mission variables in here
+	
+	-- Defining sgroups, egroups for future reference 
+--	eg_egroupName = EGroup_CreateIfNotFound("eg_egroupName")
+
+	--define variables here 
+	
+end
+
+
+function Mission_SetRestrictions()	-- set up any restrictions (i.e. locking out units, etc) in here
+	
+	--To remove/add player's abilities, constructions, ...
+
+
+end
+
+-- This function will be called before the intro cinematic
+function Mission_Preset()	-- any other setup to do before the mission starts (i.e. set up rules, spawn units, etc)
+	
+
+	
+end
+
+-- This function will be called after the intro cinematic, before the player takes control
+function Mission_Start()	-- this is triggered after the intro, just as control is passed to the player
+	
+	-- start the opening objectives (if you're using ObjectiveTable style objectives)
+	
+	
+end
+
+--The recipe can be used to create initial spawns, set up objectives or completion/failure states
+function GetRecipe()
+
+	local recipe = {
+
+		
+		-- Defining Locations for reference in script
+		--locations = {
+			--{ descriptor = "descriptorToUse", marker = mkr_mkrNameInEditor, player = player1 },
+		--},
+		
+		
+		-- Modules
+		modules = {
+
+			-- Player starting units spawner when the mission starts. 
+			-- Define the spawn location, unit type, number of units and can mention where to spawn them.
+			--{
+				--type = "UnitSpawner",
+				--player = player1,
+				--spawnLocation = mkr_mkrNameInEditor,
+				--units = {
+					--{type = "scar_spearman", numSquads = 3, spawn = mkr_mkrNameInEditor},
+				--},
+			--},
+			
+		},
+
+		
+		-- Presentation aspects for the start or end of a mission
+		onStart = {
+			intelEvent = "",
+			expositionCamera = {},
+			titleCard = {
+				icon = "icons/campaign/campaign_angevin_the_conquest", --icon to use for title card on mission start
+				location = LOC("Location, year"),
+			},
+			actions = {
+			},
+		},
+	}
+
+		
+		
+	return recipe
+
+end
+

@@ -1,0 +1,191 @@
+
+
+import("MissionOMatic/MissionOMatic.scar")
+
+-- The MissionOMatic will check to see if the functions below are defined, and if they are,
+-- it will call them at the appropriate time
+
+
+function Mission_SetupPlayers()
+	
+	--
+	-- get player IDs for each player
+	-- 
+	player1 = World_GetPlayerAt(1) 
+	player2 = World_GetPlayerAt(2)
+	--upgrade1 = BP_GetUpgradeBlueprintByPbgID(127850)
+	--upgrade1 = BP_GetUpgradeBlueprint("upgrade_tech_university_biology")
+		
+		-- Setup players name, starting age and max age 
+
+	Player_SetCurrentAge(player1, AGE_IMPERIAL)
+	Player_SetCurrentAge(player2, 4)
+
+--	Player_SetMaximumAge(player1, AGE_FEUDAL)
+
+	
+end
+
+
+function Mission_SetupVariables()	-- create any extra sgroups, egroups, and mission variables in here
+	
+	-- Defining sgroups, egroups for future reference 
+    --	eg_egroupName = EGroup_CreateIfNotFound("eg_egroupName")
+
+	--define variables here 
+	
+end
+
+
+function Mission_SetRestrictions()	-- set up any restrictions (i.e. locking out units, etc) in here
+	
+	--To remove/add player's abilities, constructions, ...
+
+
+end
+
+-- This function will be called before the intro cinematic
+function Mission_Preset()	-- any other setup to do before the mission starts (i.e. set up rules, spawn units, etc)
+--	LocalCommand_PlayerUpgrade(player1, upgrade1, true, false)
+	AGS_Technologies_UpgradeAllPlayers()
+	
+end
+
+-- This function will be called after the intro cinematic, before the player takes control
+function Mission_Start()	-- this is triggered after the intro, just as control is passed to the player
+	
+	-- start the opening objectives (if you're using ObjectiveTable style objectives)
+	
+	
+end
+
+--The recipe can be used to create initial spawns, set up objectives or completion/failure states
+function GetRecipe()
+
+	local recipe = {
+
+		
+		-- Defining Locations for reference in script
+		--locations = {
+			--{ descriptor = "descriptorToUse", marker = mkr_mkrNameInEditor, player = player1 },
+		--},
+		
+		
+		-- Modules
+		modules = {
+
+			-- Player starting units spawner when the mission starts. 
+			-- Define the spawn location, unit type, number of units and can mention where to spawn them.
+			--{
+				--type = "UnitSpawner",
+				--player = player1,
+				--spawnLocation = mkr_mkrNameInEditor,
+				--units = {
+					--{type = "scar_spearman", numSquads = 3, spawn = mkr_mkrNameInEditor},
+				--},
+			--},
+			
+		},
+
+		
+		-- Presentation aspects for the start or end of a mission
+		onStart = {
+			intelEvent = "",
+			expositionCamera = {},
+			titleCard = {
+				icon = "icons/campaign/campaign_angevin_the_conquest", --icon to use for title card on mission start
+				location = LOC("Location, year"),
+			},
+			actions = {
+			},
+		},
+	}
+
+		
+		
+	return recipe
+
+end
+
+
+---------------------------------------------------------------------------------------------------
+-- Authors:
+-- Relic
+-- Woprock
+--
+-- Description:
+-- Handles civilization receiving upgrades before the game start.
+---------------------------------------------------------------------------------------------------
+
+AGS_TECHNOLOGIES_MODULE = "AGS_Technologies"
+
+---------------------------------------------------------------------------------------------------
+-- Delegates:
+---------------------------------------------------------------------------------------------------
+
+--Core_RegisterModule(AGS_TECHNOLOGIES_MODULE)	
+
+--function AGS_Technologies_UpdateModuleSettings()
+--	if AGS_GLOBAL_SETTINGS.TechnologyAge == 0 then
+--		Core_UnregisterModule(AGS_TECHNOLOGIES_MODULE)
+--	end
+--end
+
+--function AGS_Technologies_PresetPostSpawn()
+--	AGS_Technologies_UpgradeAllPlayers()
+--end
+
+---------------------------------------------------------------------------------------------------
+-- Functions:
+---------------------------------------------------------------------------------------------------
+
+function AGS_Technologies_UpgradeAllPlayers()	
+	for _, player in pairs(PLAYERS) do	
+		AGS_Technologies_UpgradePlayer(player.id, Player_GetRaceName(player.id))
+	end
+end
+
+function AGS_Technologies_UpgradePlayer(player_id, player_civ)
+	if AGS_GLOBAL_SETTINGS.TechnologyAge >= 1 then 
+		AGS_Technologies_DetermineUpgrades(player_id, player_civ, AGS_UP_DARK)
+	end
+	if AGS_GLOBAL_SETTINGS.TechnologyAge >= 2 then 
+		AGS_Technologies_DetermineUpgrades(player_id, player_civ, AGS_UP_FEUDAL)
+	end
+	if AGS_GLOBAL_SETTINGS.TechnologyAge >= 3 then 
+		AGS_Technologies_DetermineUpgrades(player_id, player_civ, AGS_UP_CASTLE)
+	end
+	if AGS_GLOBAL_SETTINGS.TechnologyAge >= 4 then 
+		AGS_Technologies_DetermineUpgrades(player_id, player_civ, AGS_UP_IMPERIAL)
+	end
+end
+
+function AGS_Technologies_DetermineUpgrades(player_id, player_civ, upgrades_age)
+	-- Common upgrades are applied first.
+	if player_civ ~= AGS_CIV_SULTANATE then 
+		AGS_Technologies_ApplyUpgradeList(player_id, AGS_UPGRADE_TABLE[AGS_UP_ANY][upgrades_age])
+		-- Remove upgrades that would conflict with unique civ upgrades.
+		AGS_Technologies_RemoveUpgradeList(player_id, AGS_UPGRADE_CORRECTION_TABLE[player_civ])
+	end	
+	-- Apply unique upgrades that each civ has.
+	AGS_Technologies_ApplyUpgradeList(player_id, AGS_UPGRADE_TABLE[player_civ][upgrades_age])	
+end
+
+function AGS_Technologies_ApplyUpgradeList(player_id, list)
+	for _, upgrade in pairs(list) do 
+		local bp_upgrade = BP_GetUpgradeBlueprint(upgrade)
+		if not Player_HasUpgrade(player_id, bp_upgrade) then
+			Player_CompleteUpgrade(player_id, bp_upgrade)				
+		end
+	end	
+end
+
+function AGS_Technologies_RemoveUpgradeList(player_id, list)
+	for _, upgrade in pairs(list) do 
+		local bp_upgrade = BP_GetUpgradeBlueprint(upgrade)
+		if not Player_HasUpgrade(player_id, bp_upgrade) then
+			Player_RemoveUpgrade(player_id, bp_upgrade)				
+		end
+	end	
+end
+
