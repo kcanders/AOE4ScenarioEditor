@@ -26,4 +26,4 @@ Follow steps 1-6, then execute step 14-19. If you would like to edit the scenari
 18. Assign an AI as an opponent. You can select whether you get Player 1 or Player 2 units by choosing your starting position of 1 or 2. If you do not, you'll be randomly assigned each time you restart the map. Note: If you do not assign a second AI player, you will receive a fatal scar error.
 19. Click Start Game.
 
-Credit to Wopack for the code to auto-upgrade techs to Imperial from the Advanced Game Settings mod.
+Credit to Woprock for the code to auto-upgrade techs to Imperial from the Advanced Game Settings mod.
